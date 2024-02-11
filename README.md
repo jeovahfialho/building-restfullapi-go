@@ -108,15 +108,44 @@ The following API endpoints are available:
 
 ## Running the Tests
 
-To run the automated tests for this system, follow these steps:
+Automated tests are crucial for maintaining the integrity and reliability of the application. This project includes a suite of automated tests that can be run to verify the functionality of the Book Management API. 
 
-1. Ensure the Docker containers for the application and database are running.
-2. Execute the test command:
-   ```bash
-   docker-compose exec app go test -v ./...
-   ```
+### Running Tests Outside Docker
 
-This will run all the automated tests defined in the project, outputting the results to your terminal.
+If you have Go installed on your local machine, you can run the automated tests directly without using Docker. This method is straightforward and allows you to quickly execute tests during development.
+
+#### Prerequisites
+
+- Ensure you have Go installed on your local machine. The application is developed with Go version 1.18. To check if Go is installed, run `go version` in your terminal.
+- Make sure all project dependencies are correctly installed. Run `go mod tidy` to download and clean up the project's dependencies.
+
+#### Executing the Tests
+
+1. **Navigate to the Project Directory**: Open a terminal and change to the directory where the project is located.
+
+    ```bash
+    cd building-restfullapi-go
+    ```
+
+2. **Run the Tests**: Execute the following command to run all tests within the project:
+
+    ```bash
+    go test -v ./...
+    ```
+
+    The `-v` flag enables verbose output, showing each test case that is being run.
+
+3. **Review the Test Results**: After running the tests, you'll see the output in your terminal. Each test will show `PASS` if successful or `FAIL` if there was an error, along with detailed information about the test execution.
+
+### Tips for Troubleshooting
+
+- If you encounter errors related to missing packages or dependencies, ensure that you have run `go mod tidy` to manage the project's modules.
+- For failing tests, review the error messages and test output carefully. They often provide insights into what went wrong and how to fix the issue.
+
+### Continuous Integration
+
+For projects set up with Continuous Integration (CI) pipelines, automated tests are typically executed in a CI environment. Configuring your CI pipeline to run `go test -v ./...` ensures that tests are automatically run against every commit or pull request, helping to catch and resolve issues early in the development process.
+
 
 ## Postman Collection
 

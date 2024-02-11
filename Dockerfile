@@ -24,9 +24,6 @@ FROM scratch
 COPY --from=builder /app/main /main
 COPY --from=builder /app/wait-for-it.sh /wait-for-it.sh
 
-# Optionally, set the working directory if you need to execute the binary in a specific directory
-# WORKDIR /app
-
 # Ensure wait-for-it.sh has the correct permissions before building the image
 # Command to execute the binary
 CMD ["/main"]
