@@ -15,8 +15,6 @@ import (
 
 func main() {
 
-	fmt.Println("+++++++++++++++++", os.Getenv("DSN"))
-
 	// Establish connection to the database
 	db, err := store.NewDB(os.Getenv("DSN"))
 	if err != nil {

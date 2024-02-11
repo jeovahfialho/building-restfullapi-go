@@ -5,6 +5,7 @@ import (
 	"book-management/internal/store"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -22,6 +23,43 @@ func (m *MockStore) GetBooks() ([]model.Book, error) {
 		{ID: 2, Title: "Test Book 2", Author: "Author 2", PublishedYear: 2022, Genre: "Genre 2", Summary: "Summary 2"},
 	}
 	return books, nil
+}
+
+var mockBooks = []model.Book{
+	{ID: 1, Title: "Test Book 1", Author: "Author 1", PublishedYear: 2021, Genre: "Genre 1", Summary: "Summary 1"},
+	{ID: 2, Title: "Test Book 2", Author: "Author 2", PublishedYear: 2022, Genre: "Genre 2", Summary: "Summary 2"},
+}
+
+func (m *MockStore) CreateBook(book *model.Book) error {
+	// Implement mock behavior for creating a book
+	return nil
+}
+
+func (m *MockStore) GetBook(id int) (model.Book, error) {
+	// Implement mock behavior for getting a book by ID
+	for _, b := range mockBooks {
+		if b.ID == id {
+			return b, nil
+		}
+	}
+	return model.Book{}, errors.New("book not found")
+}
+
+func (m *MockStore) UpdateBook(book *model.Book) error {
+	// Simulate updating the book in the mock store
+	// Here, you might update the book with the given ID in your mock data store
+	for i := range mockBooks {
+		if mockBooks[i].ID == book.ID {
+			mockBooks[i] = *book
+			break
+		}
+	}
+	return nil
+}
+
+func (m *MockStore) DeleteBook(id int) error {
+	// Implement mock behavior for deleting a book
+	return nil
 }
 
 func TestGetBooks(t *testing.T) {
@@ -52,12 +90,6 @@ func TestGetBooks(t *testing.T) {
 
 // TestCreateBook tests the CreateBook handler function.
 func TestCreateBook(t *testing.T) {
-
-	defer func() {
-		if r := recover(); r != nil {
-			t.Errorf("TestCreateBook panicked: %v", r)
-		}
-	}()
 	// Define a sample book to be created.
 	newBook := model.Book{
 		ID:            3,

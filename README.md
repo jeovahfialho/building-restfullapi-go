@@ -17,13 +17,13 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://yourrepositorylink/book-management.git
+git clone https://github.com/jeovahfialho/building-restfullapi-go.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd book-management
+cd building-restfullapi-go
 ```
 
 3. Use Docker Compose to build and start the services:
