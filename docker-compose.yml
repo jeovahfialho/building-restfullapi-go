@@ -4,7 +4,6 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_DATABASE: 'bookdb'          # Name of the database to be automatically created
-      MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'   # Password for the root user
     ports:
       - "3306:3306"                     # Maps port 3306 of the container to the same port on the host machine
