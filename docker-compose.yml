@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'bookdb'          # Name of the database to be automatically created
+      MYSQL_ROOT_PASSWORD: 'password'   # Password for the root user
+    ports:
+      - "3306:3306"                     # Maps port 3306 of the container to the same port on the host machine
+    healthcheck:                        # Checks the health of MySQL before allowing connections
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/mysql          # Persistent volume to store MySQL data
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql  # Initialization script to configure the database
+  app:
+    build: .                            # Builds the application image from the Dockerfile in the current directory
+    depends_on:
+      db:
+        condition: service_healthy     # Waits for MySQL to become "healthy" before starting
+    ports:
+      - "8080:8080"                     # Maps port 8080 of the container to the same port on the host machine
+    environment:
+      DSN: 'root:password@tcp(db:3306)/bookdb'  # DSN for connecting to MySQL
+volumes:
+  db_data:                              # Defines the persistent volume for MySQL
+    driver: local
